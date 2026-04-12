@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'fs';
+import { copyFileSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -27,16 +27,15 @@ const filesToCopy = [
   { src: '.prettierignore', dest: '.prettierignore' },
 ];
 
-function copyConfigFiles() {
-  console.log('\n✨ Setting up @amurisavemylifee/shared-config...\n');
+try {
+  console.log('\n✨ @amurisavemylifee/shared-config installed\n');
 
   filesToCopy.forEach(({ src, dest }) => {
     const srcPath = join(packageDir, src);
     const destPath = join(projectDir, dest);
 
-    // Проверяем существует ли файл (пропускаем если уже есть, чтобы не перезаписать)
     if (existsSync(destPath)) {
-      console.log(`⏭️  ${dest} already exists (skipped)`);
+      console.log(`⏭️  ${dest} already exists`);
       return;
     }
 
@@ -47,78 +46,15 @@ function copyConfigFiles() {
       console.warn(`⚠️  Failed to copy ${dest}: ${error.message}`);
     }
   });
-}
 
-function updatePackageJson() {
-  const packageJsonPath = join(projectDir, 'package.json');
-
-  if (!existsSync(packageJsonPath)) {
-    console.warn('⚠️  package.json not found, skipping scripts setup');
-    return false;
-  }
-
-  try {
-    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-
-    // Добавляем скрипты
-    packageJson.scripts = packageJson.scripts || {};
-    const scriptsToAdd = {
-      lint: 'eslint . --max-warnings 0',
-      'lint:fix': 'eslint . --fix --max-warnings 0',
-      format: 'prettier --write .',
-      'format:check': 'prettier --check .',
-      'type-check': 'tsc --build',
-      validate: 'npm run type-check && npm run lint && npm run format:check',
-      prepare: 'husky',
-    };
-
-    // Добавляем только новые скрипты (не перезаписываем существующие)
-    Object.entries(scriptsToAdd).forEach(([key, value]) => {
-      if (!packageJson.scripts[key]) {
-        packageJson.scripts[key] = value;
-      }
-    });
-
-    // Добавляем lint-staged конфиг (если его нет)
-    if (!packageJson['lint-staged']) {
-      packageJson['lint-staged'] = {
-        '*.{ts,tsx,vue}': ['eslint --fix --max-warnings 0', 'prettier --write'],
-        '*.{js,mjs,cjs}': ['eslint --fix --max-warnings 0', 'prettier --write'],
-        '*.{css,scss,html}': ['prettier --write'],
-        '*.{json,md,yaml,yml}': ['prettier --write'],
-      };
-    }
-
-    writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-    console.log('✅ Updated package.json with scripts and lint-staged config');
-    return true;
-  } catch (error) {
-    console.warn(`⚠️  Failed to update package.json: ${error.message}`);
-    return false;
-  }
-}
-
-try {
-  // Копируем конфиги
-  copyConfigFiles();
-
-  // Обновляем package.json
-  updatePackageJson();
-
-  console.log('\n✅ Setup complete!\n');
-  console.log('Next steps:');
-  console.log('  1. Install peer dependencies:');
-  console.log('     npm install --save-dev eslint prettier typescript');
-  console.log('  2. Install linting tools:');
-  console.log('     npm install --save-dev lint-staged husky');
-  console.log('  3. Initialize Husky:');
-  console.log('     npx husky install');
-  console.log('  4. Add git hooks:');
-  console.log('     npx husky add .husky/pre-commit "npx lint-staged"');
-  console.log('     npx husky add .husky/pre-push "npm run type-check"');
-  console.log('  5. Run validation:');
-  console.log('     npm run validate\n');
+  console.log('\n🚀 Next step: run setup\n');
+  console.log('  npx shared-config\n');
+  console.log('This will:');
+  console.log('  ✓ Ensure all config files are in place');
+  console.log('  ✓ Add npm scripts to package.json');
+  console.log('  ✓ Install dependencies (eslint, prettier, typescript, husky, lint-staged)');
+  console.log('  ✓ Setup Husky git hooks\n');
 } catch (error) {
-  console.error('❌ Error during setup:', error.message);
+  console.error('❌ Error during postinstall:', error.message);
   process.exit(1);
 }

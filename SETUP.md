@@ -8,7 +8,7 @@ Fast setup guide for adding this strict config to your project.
 - npm 9+ (or yarn/pnpm)
 - Git
 
-## Automatic Setup (One Command!)
+## Automatic Setup (Two Commands!)
 
 ### Step 1: Install package
 
@@ -16,26 +16,21 @@ Fast setup guide for adding this strict config to your project.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-✅ **EVERYTHING HAPPENS AUTOMATICALLY!** The postinstall script:
-- Copies all config files (only if they don't already exist)
+The postinstall script copies all config files automatically ✅
+
+### Step 2: Run setup
+
+```bash
+npx shared-config
+```
+
+**This automatically:**
+- Copies config files (if needed)
 - Updates `package.json` with npm scripts
-- Adds lint-staged configuration
+- Installs dependencies: eslint, prettier, typescript, lint-staged, husky
+- Sets up Husky hooks
 
-### Step 2: Install peer dependencies
-
-```bash
-npm install --save-dev eslint prettier typescript lint-staged husky
-```
-
-### Step 3: Set up Husky hooks
-
-```bash
-npx husky install
-npx husky add .husky/pre-commit "npx lint-staged"
-npx husky add .husky/pre-push "npm run type-check"
-```
-
-### Step 4: Done! Run validation
+### Step 3: Done! Run validation
 
 ```bash
 npm run validate

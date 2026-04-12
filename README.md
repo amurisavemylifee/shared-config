@@ -15,7 +15,7 @@ One strict config to rule them all — install once, update everywhere.
 - ✅ **Prettier integration** — Single `eslint --fix` handles both linting and formatting
 - ✅ **Pre-commit hooks** — Husky + lint-staged for fast checks before pushing
 
-## Installation (One Command!)
+## Installation (Two Commands!)
 
 ### 1. Install the package
 
@@ -23,26 +23,21 @@ One strict config to rule them all — install once, update everywhere.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-**Automatic setup happens immediately!** ✅
-- Config files are copied to your project (only new ones, existing files are preserved)
-- npm scripts are added to package.json
-- lint-staged configuration is created
+**This copies config files automatically!** ✅
 
-### 2. Install peer dependencies
+### 2. Run setup (does everything else)
 
 ```bash
-npm install --save-dev eslint prettier typescript lint-staged husky
+npx shared-config
 ```
 
-### 3. Set up Husky hooks (Recommended)
+**This will:**
+- ✅ Ensure all config files are in place
+- ✅ Add npm scripts to package.json (lint, type-check, validate, etc.)
+- ✅ Install dependencies (eslint, prettier, typescript, lint-staged, husky)
+- ✅ Setup Husky hooks (pre-commit, pre-push)
 
-```bash
-npx husky install
-npx husky add .husky/pre-commit "npx lint-staged"
-npx husky add .husky/pre-push "npm run type-check"
-```
-
-### 4. Done! Run validation
+### 3. Done! Run validation
 
 ```bash
 npm run validate
@@ -50,10 +45,11 @@ npm run validate
 
 That's it! 🎉
 
-**Note:** If you need to re-run setup manually:
+**Need to re-run specific steps?**
 ```bash
-npx shared-config              # Copy config files
-npx shared-config update      # Add npm scripts to package.json
+npx shared-config              # Full setup (recommended)
+npx shared-config init         # Only copy config files
+npx shared-config update       # Only update package.json
 ```
 
 ## Quick Start
