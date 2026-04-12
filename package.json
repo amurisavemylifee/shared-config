@@ -23,9 +23,7 @@
   "bin": {
     "shared-config": "./bin/setup.js"
   },
-  "scripts": {
-    "postinstall": "node ./bin/postinstall.js"
-  },
+  "scripts": {},
   "exports": {
     "./eslint": "./eslint.config.js",
     "./prettier": "./prettier.config.js",

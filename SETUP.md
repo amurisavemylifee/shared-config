@@ -8,15 +8,13 @@ Fast setup guide for adding this strict config to your project.
 - npm 9+ (or yarn/pnpm)
 - Git
 
-## Automatic Setup (Two Commands!)
+## Automatic Setup
 
-### Step 1: Install package
+### Step 1: Install the package
 
 ```bash
 npm install --save-dev @amurisavemylifee/shared-config
 ```
-
-The postinstall script creates config files that **inherit from the package** ✅
 
 ### Step 2: Run setup
 
@@ -38,6 +36,11 @@ npm run validate
 ```
 
 That's it! 🎉
+
+**Or as one command:**
+```bash
+npm install --save-dev @amurisavemylifee/shared-config && npx shared-config
+```
 
 ## How It Works
 
@@ -78,7 +81,7 @@ export default config;
 - ✅ Easy to customize by extending the inherited config
 - ✅ Single source of truth for standards
 
-## Manual Setup (If postinstall doesn't work)
+## Manual Setup (If npx command doesn't work)
 
 If for some reason the postinstall script didn't run:
 

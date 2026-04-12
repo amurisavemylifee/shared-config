@@ -15,17 +15,13 @@ One strict config to rule them all — install once, update everywhere.
 - ✅ **Prettier integration** — Single `eslint --fix` handles both linting and formatting
 - ✅ **Pre-commit hooks** — Husky + lint-staged for fast checks before pushing
 
-## Installation (Two Commands!)
-
-### 1. Install the package
+## Installation (One Command!)
 
 ```bash
-npm install --save-dev @amurisavemylifee/shared-config
+npm install --save-dev @amurisavemylifee/shared-config && npx shared-config
 ```
 
-**This creates config files that inherit from the package!** ✅
-
-### 2. Run setup (does everything else)
+### What it does:
 
 ```bash
 npx shared-config
