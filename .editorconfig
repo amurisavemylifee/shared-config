@@ -1,0 +1,39 @@
+# EditorConfig: https://editorconfig.org
+# Ensures consistent whitespace, encoding, and line endings across all editors
+# and IDEs — the lowest-common-denominator companion to Prettier.
+
+root = true
+
+[*]
+# UTF-8 everywhere: handles all Unicode characters safely
+charset = utf-8
+
+# LF line endings: git default, consistent across macOS/Linux/Windows
+end_of_line = lf
+
+# Insert final newline: POSIX standard, prevents diff noise
+insert_final_newline = true
+
+# Trim trailing whitespace: removes invisible noise from diffs
+trim_trailing_whitespace = true
+
+# 2-space indent: matches Prettier config
+indent_style = space
+indent_size = 2
+
+[*.md]
+# Markdown: two trailing spaces = intentional line break — preserve them
+trim_trailing_whitespace = false
+
+[*.{yaml,yml}]
+# YAML is indent-sensitive; keep 2 spaces
+indent_size = 2
+
+[Makefile]
+# Makefiles require hard tabs
+indent_style = tab
+
+[*.{png,jpg,jpeg,gif,webp,ico,woff,woff2,ttf,eot,svg}]
+# Binary files: no text normalization
+insert_final_newline = false
+trim_trailing_whitespace = false

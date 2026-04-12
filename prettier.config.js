@@ -1,0 +1,18 @@
+export default {
+  $schema: "https://json.schemastore.org/prettierrc",
+  printWidth: 130,
+  tabWidth: 2,
+  useTabs: false,
+  semi: true,
+  singleQuote: false,
+  trailingComma: "all",
+  bracketSpacing: true,
+  arrowParens: "always",
+  proseWrap: "preserve",
+  htmlWhitespaceSensitivity: "strict",
+  vueIndentScriptAndStyle: false,
+  endOfLine: "lf",
+  embeddedLanguageFormatting: "auto",
+  bracketSameLine: false,
+  singleAttributePerLine: true,
+};

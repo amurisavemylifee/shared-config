@@ -1,0 +1,69 @@
+{
+  "name": "@amurisavemylifee/shared-config",
+  "version": "1.0.0",
+  "description": "Strict, production-ready ESLint, Prettier, and TypeScript configurations for Vue 3, TypeScript, and Node.js projects",
+  "license": "MIT",
+  "author": "amurisavemylifee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amurisavemylifee/shared-config.git"
+  },
+  "keywords": [
+    "eslint",
+    "prettier",
+    "typescript",
+    "config",
+    "vue3",
+    "vue",
+    "linting",
+    "formatting",
+    "code-quality"
+  ],
+  "type": "module",
+  "bin": {
+    "shared-config": "./bin/setup.js"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/postinstall.js"
+  },
+  "exports": {
+    "./eslint": "./eslint.config.js",
+    "./prettier": "./prettier.config.js",
+    "./tsconfig": "./tsconfig.json",
+    "./editorconfig": "./.editorconfig",
+    "./prettierignore": "./.prettierignore",
+    "./package": "./package.json"
+  },
+  "files": [
+    "eslint.config.js",
+    "prettier.config.js",
+    "tsconfig.json",
+    ".editorconfig",
+    ".prettierignore",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "eslint": ">=10.0.0",
+    "prettier": ">=3.0.0",
+    "typescript": ">=5.0.0"
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.58.1",
+    "@typescript-eslint/parser": "^8.58.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "eslint-plugin-sonarjs": "^4.0.2",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "eslint-plugin-vue": "^10.8.0",
+    "typescript-eslint": "^8.58.1",
+    "vue-eslint-parser": "^10.4.0"
+  }
+}
