@@ -16,7 +16,7 @@ Fast setup guide for adding this strict config to your project.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-The postinstall script copies all config files automatically ✅
+The postinstall script creates config files that **inherit from the package** ✅
 
 ### Step 2: Run setup
 
@@ -25,7 +25,8 @@ npx shared-config
 ```
 
 **This automatically:**
-- Copies config files (if needed)
+- Creates config files that inherit from shared-config
+- Copies static files (.editorconfig, .prettierignore)
 - Updates `package.json` with npm scripts
 - Installs dependencies: eslint, prettier, typescript, lint-staged, husky
 - Sets up Husky hooks
@@ -38,30 +39,109 @@ npm run validate
 
 That's it! 🎉
 
+## How It Works
+
+Your config files inherit from the package:
+
+**eslint.config.js:**
+```javascript
+import sharedConfig from '@amurisavemylifee/shared-config/eslint';
+
+export default [
+  ...sharedConfig,
+  // Add your custom rules here
+];
+```
+
+**prettier.config.js:**
+```javascript
+import config from '@amurisavemylifee/shared-config/prettier';
+
+export default config;
+// Or override specific options:
+// export default { ...config, printWidth: 100 };
+```
+
+**tsconfig.json:**
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "compilerOptions": {
+    // Add your custom options here
+  }
+}
+```
+
+**Benefits:**
+- ✅ Updates in shared-config automatically apply to all projects
+- ✅ No need to re-copy files when updating the package
+- ✅ Easy to customize by extending the inherited config
+- ✅ Single source of truth for standards
+
 ## Manual Setup (If postinstall doesn't work)
 
 If for some reason the postinstall script didn't run:
 
 ```bash
-# Copy config files to project
-npx shared-config
+# Create config files that inherit from shared-config
+npx shared-config init
 
-# Update package.json with scripts
-npx shared-config update
+# Full setup (includes dependencies and husky)
+npx shared-config setup
 ```
 
 ## Verifying Installation
 
 Check that these files exist in your project root:
-- ✅ `eslint.config.js`
-- ✅ `prettier.config.js`
-- ✅ `tsconfig.json`
-- ✅ `.editorconfig`
-- ✅ `.prettierignore`
+- ✅ `eslint.config.js` (inherits from @amurisavemylifee/shared-config/eslint)
+- ✅ `prettier.config.js` (inherits from @amurisavemylifee/shared-config/prettier)
+- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig)
+- ✅ `.editorconfig` (copied from package)
+- ✅ `.prettierignore` (copied from package)
 
 And in `package.json`:
 - ✅ `scripts` with: lint, lint:fix, format, format:check, type-check, validate, prepare
 - ✅ `lint-staged` configuration with file patterns
+
+## Customizing Inherited Configs
+
+You can extend the inherited configs in your project:
+
+**eslint.config.js - Add custom rules:**
+```javascript
+import sharedConfig from '@amurisavemylifee/shared-config/eslint';
+import customPlugin from 'custom-eslint-plugin';
+
+export default [
+  ...sharedConfig,
+  {
+    plugins: { customPlugin },
+    rules: { 'custom-plugin/rule': 'warn' },
+  },
+];
+```
+
+**prettier.config.js - Override options:**
+```javascript
+import config from '@amurisavemylifee/shared-config/prettier';
+
+export default {
+  ...config,
+  printWidth: 100, // Override specific option
+};
+```
+
+**tsconfig.json - Add project-specific options:**
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}
+```
 
 ## Publishing to GitHub Packages
 
@@ -127,15 +207,20 @@ The postinstall hook handles updating files automatically! ✅
 
 ## Updating the Config
 
-When you improve the config:
+**In the shared-config repo:**
 
-1. Update `eslint.config.js`, `prettier.config.js`, or `tsconfig.json` in the shared-config repo
-2. Bump version in `package.json`
+1. Update `eslint.config.js`, `prettier.config.js`, or `tsconfig.json`
+2. Bump version in `package.json` (`npm version minor` or `npm version patch`)
 3. Commit and push
 4. Create a GitHub Release (auto-publishes with GitHub Actions)
-5. In each project: `npm update @amurisavemylifee/shared-config`
 
-The postinstall hook automatically copies updated config files and updates package.json scripts! ✅
+**In your projects:**
+
+```bash
+npm update @amurisavemylifee/shared-config
+```
+
+✅ **That's it!** Your inherited configs automatically use the updated rules from the package. No need to re-copy files or update anything else!
 
 ## Troubleshooting
 

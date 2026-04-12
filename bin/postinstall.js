@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { copyFileSync, existsSync } from 'fs';
+import { copyFileSync, existsSync, writeFileSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -19,19 +19,47 @@ if (packageDir === projectDir) {
   process.exit(0);
 }
 
-const filesToCopy = [
-  { src: 'eslint.config.js', dest: 'eslint.config.js' },
-  { src: 'prettier.config.js', dest: 'prettier.config.js' },
-  { src: 'tsconfig.json', dest: 'tsconfig.json' },
-  { src: '.editorconfig', dest: '.editorconfig' },
-  { src: '.prettierignore', dest: '.prettierignore' },
+const configStubs = [
+  {
+    dest: 'eslint.config.js',
+    content: `import sharedConfig from '@amurisavemylifee/shared-config/eslint';
+
+export default [
+  ...sharedConfig,
+];
+`,
+  },
+  {
+    dest: 'prettier.config.js',
+    content: `import config from '@amurisavemylifee/shared-config/prettier';
+
+export default config;
+`,
+  },
+  {
+    dest: 'tsconfig.json',
+    content: `{
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "compilerOptions": {}
+}
+`,
+  },
+  {
+    dest: '.editorconfig',
+    src: '.editorconfig',
+    copy: true,
+  },
+  {
+    dest: '.prettierignore',
+    src: '.prettierignore',
+    copy: true,
+  },
 ];
 
 try {
   console.log('\n✨ @amurisavemylifee/shared-config installed\n');
 
-  filesToCopy.forEach(({ src, dest }) => {
-    const srcPath = join(packageDir, src);
+  configStubs.forEach(({ dest, content, src, copy }) => {
     const destPath = join(projectDir, dest);
 
     if (existsSync(destPath)) {
@@ -40,10 +68,18 @@ try {
     }
 
     try {
-      copyFileSync(srcPath, destPath);
-      console.log(`✅ ${dest}`);
+      if (copy && src) {
+        // Copy files that don't support inheritance (.editorconfig, .prettierignore)
+        const srcPath = join(packageDir, src);
+        copyFileSync(srcPath, destPath);
+        console.log(`✅ Copied ${dest}`);
+      } else {
+        // Create config stubs that inherit from shared-config package
+        writeFileSync(destPath, content);
+        console.log(`✅ Created ${dest} (inherits from shared-config)`);
+      }
     } catch (error) {
-      console.warn(`⚠️  Failed to copy ${dest}: ${error.message}`);
+      console.warn(`⚠️  Failed to create ${dest}: ${error.message}`);
     }
   });
 

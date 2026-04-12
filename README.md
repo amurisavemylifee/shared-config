@@ -23,7 +23,7 @@ One strict config to rule them all — install once, update everywhere.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-**This copies config files automatically!** ✅
+**This creates config files that inherit from the package!** ✅
 
 ### 2. Run setup (does everything else)
 
@@ -32,7 +32,8 @@ npx shared-config
 ```
 
 **This will:**
-- ✅ Ensure all config files are in place
+- ✅ Create config files that inherit from shared-config (ESLint, Prettier, TypeScript)
+- ✅ Copy static files (.editorconfig, .prettierignore)
 - ✅ Add npm scripts to package.json (lint, type-check, validate, etc.)
 - ✅ Install dependencies (eslint, prettier, typescript, lint-staged, husky)
 - ✅ Setup Husky hooks (pre-commit, pre-push)
@@ -45,10 +46,15 @@ npm run validate
 
 That's it! 🎉
 
+**Why inheritance?**
+- ✅ Updates in shared-config automatically apply to your project
+- ✅ No need to re-copy files on version updates
+- ✅ Customize by extending the config in your own files
+
 **Need to re-run specific steps?**
 ```bash
 npx shared-config              # Full setup (recommended)
-npx shared-config init         # Only copy config files
+npx shared-config init         # Only create config files
 npx shared-config update       # Only update package.json
 ```
 
