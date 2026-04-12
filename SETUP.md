@@ -8,7 +8,7 @@ Fast setup guide for adding this strict config to your project.
 - npm 9+ (or yarn/pnpm)
 - Git
 
-## Automatic Setup (Recommended)
+## Automatic Setup (One Command!)
 
 ### Step 1: Install package
 
@@ -16,36 +16,15 @@ Fast setup guide for adding this strict config to your project.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-✅ **Config files are automatically copied!** The postinstall script handles it.
+✅ **EVERYTHING HAPPENS AUTOMATICALLY!** The postinstall script:
+- Copies all config files (only if they don't already exist)
+- Updates `package.json` with npm scripts
+- Adds lint-staged configuration
 
-### Step 2: Update package.json with scripts
+### Step 2: Install peer dependencies
 
-**Option A - Let CLI do it:**
 ```bash
-npx shared-config update-package-json
-```
-
-**Option B - Do it manually:**
-
-Add to `package.json`:
-```json
-{
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix --max-warnings 0",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "type-check": "tsc --build",
-    "validate": "npm run type-check && npm run lint && npm run format:check",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,vue}": ["eslint --fix --max-warnings 0", "prettier --write"],
-    "*.{js,mjs,cjs}": ["eslint --fix --max-warnings 0", "prettier --write"],
-    "*.{css,scss,html}": ["prettier --write"],
-    "*.{json,md,yaml,yml}": ["prettier --write"]
-  }
-}
+npm install --save-dev eslint prettier typescript lint-staged husky
 ```
 
 ### Step 3: Set up Husky hooks
@@ -56,24 +35,25 @@ npx husky add .husky/pre-commit "npx lint-staged"
 npx husky add .husky/pre-push "npm run type-check"
 ```
 
-### Step 4: Validate
+### Step 4: Done! Run validation
 
 ```bash
-npm run lint:fix
-npm run type-check
+npm run validate
 ```
 
-Done! 🎉
+That's it! 🎉
 
 ## Manual Setup (If postinstall doesn't work)
 
 If for some reason the postinstall script didn't run:
 
 ```bash
-npx shared-config init
-```
+# Copy config files to project
+npx shared-config
 
-This manually copies all config files.
+# Update package.json with scripts
+npx shared-config update
+```
 
 ## Verifying Installation
 
@@ -85,8 +65,8 @@ Check that these files exist in your project root:
 - ✅ `.prettierignore`
 
 And in `package.json`:
-- ✅ `scripts` with lint, type-check, etc.
-- ✅ `lint-staged` configuration
+- ✅ `scripts` with: lint, lint:fix, format, format:check, type-check, validate, prepare
+- ✅ `lint-staged` configuration with file patterns
 
 ## Publishing to GitHub Packages
 
@@ -158,7 +138,9 @@ When you improve the config:
 2. Bump version in `package.json`
 3. Commit and push
 4. Create a GitHub Release (auto-publishes with GitHub Actions)
-5. In each project: `npm update @amurisavemylifee/shared-config && node .setup-shared-config.js`
+5. In each project: `npm update @amurisavemylifee/shared-config`
+
+The postinstall hook automatically copies updated config files and updates package.json scripts! ✅
 
 ## Troubleshooting
 

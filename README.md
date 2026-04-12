@@ -15,7 +15,7 @@ One strict config to rule them all — install once, update everywhere.
 - ✅ **Prettier integration** — Single `eslint --fix` handles both linting and formatting
 - ✅ **Pre-commit hooks** — Husky + lint-staged for fast checks before pushing
 
-## Installation (Super Easy!)
+## Installation (One Command!)
 
 ### 1. Install the package
 
@@ -23,36 +23,15 @@ One strict config to rule them all — install once, update everywhere.
 npm install --save-dev @amurisavemylifee/shared-config
 ```
 
-**That's it!** ✅ All config files are automatically copied to your project.
+**Automatic setup happens immediately!** ✅
+- Config files are copied to your project (only new ones, existing files are preserved)
+- npm scripts are added to package.json
+- lint-staged configuration is created
 
-### 2. Update package.json with npm scripts (Optional)
+### 2. Install peer dependencies
 
-The configs are already in place. Now add npm scripts:
-
-**Option A - Automatic:**
 ```bash
-npx shared-config update-package-json
-```
-
-**Option B - Manual:**
-```json
-{
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix --max-warnings 0",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "type-check": "tsc --build",
-    "validate": "npm run type-check && npm run lint && npm run format:check",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,vue}": ["eslint --fix --max-warnings 0", "prettier --write"],
-    "*.{js,mjs,cjs}": ["eslint --fix --max-warnings 0", "prettier --write"],
-    "*.{css,scss,html}": ["prettier --write"],
-    "*.{json,md,yaml,yml}": ["prettier --write"]
-  }
-}
+npm install --save-dev eslint prettier typescript lint-staged husky
 ```
 
 ### 3. Set up Husky hooks (Recommended)
@@ -63,14 +42,19 @@ npx husky add .husky/pre-commit "npx lint-staged"
 npx husky add .husky/pre-push "npm run type-check"
 ```
 
-### 4. Validate
+### 4. Done! Run validation
 
 ```bash
-npm run lint:fix
-npm run type-check
+npm run validate
 ```
 
-Done! 🎉
+That's it! 🎉
+
+**Note:** If you need to re-run setup manually:
+```bash
+npx shared-config              # Copy config files
+npx shared-config update      # Add npm scripts to package.json
+```
 
 ## Quick Start
 
