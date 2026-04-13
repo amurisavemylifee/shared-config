@@ -106,7 +106,9 @@ Your project gets three TypeScript configs (like Vite):
 
 ```json
 {
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -116,8 +118,7 @@ Your project gets three TypeScript configs (like Vite):
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "files": []
+  ]
 }
 ```
 
@@ -281,7 +282,9 @@ export default {
 
 ```json
 {
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -291,8 +294,7 @@ export default {
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "files": []
+  ]
 }
 ```
 

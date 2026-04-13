@@ -27,7 +27,7 @@
   "exports": {
     "./eslint": "./eslint.config.js",
     "./prettier": "./prettier.config.js",
-    "./tsconfig": "./tsconfig.json",
+    "./tsconfig": "./tsconfig.base.json",
     "./tsconfig.app": "./tsconfig.app.json",
     "./tsconfig.node": "./tsconfig.node.json",
     "./editorconfig": "./.editorconfig",
@@ -36,6 +36,7 @@
   "files": [
     "eslint.config.js",
     "prettier.config.js",
+    "tsconfig.base.json",
     "tsconfig.node.json",
     "tsconfig.app.json",
     ".editorconfig",

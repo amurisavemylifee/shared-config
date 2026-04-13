@@ -33,7 +33,9 @@ export default config;
   {
     dest: "tsconfig.json",
     content: `{
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -43,8 +45,7 @@ export default config;
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "files": []
+  ]
 }
 `,
   },
