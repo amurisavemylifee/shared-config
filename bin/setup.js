@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { execSync } from "child_process";
@@ -175,31 +175,57 @@ function setupHusky() {
 
   try {
     // Initialize husky
-    execSync("npx husky install", {
-      cwd: projectDir,
-      stdio: "inherit",
-    });
+    try {
+      execSync("npx husky install", {
+        cwd: projectDir,
+        stdio: "pipe",
+      });
+    } catch (e) {
+      // husky install might show deprecation but still work
+    }
 
-    // Add pre-commit hook
-    execSync('npx husky add .husky/pre-commit "npx lint-staged"', {
-      cwd: projectDir,
-      stdio: "inherit",
-    });
+    // Create .husky directory if it doesn't exist
+    const huskyDir = join(projectDir, ".husky");
+    if (!existsSync(huskyDir)) {
+      mkdirSync(huskyDir, { recursive: true });
+    }
 
-    // Add pre-push hook
-    execSync('npx husky add .husky/pre-push "npm run type-check"', {
-      cwd: projectDir,
-      stdio: "inherit",
-    });
+    // Create pre-commit hook
+    const preCommitHook = join(huskyDir, "pre-commit");
+    const preCommitContent = `#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
+`;
+    writeFileSync(preCommitHook, preCommitContent);
+    try {
+      execSync(`chmod +x "${preCommitHook}"`, { shell: "/bin/bash" });
+    } catch (e) {
+      // chmod might fail on Windows, that's ok
+    }
+    console.log("✅ Created .husky/pre-commit");
+
+    // Create pre-push hook
+    const prePushHook = join(huskyDir, "pre-push");
+    const prePushContent = `#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run type-check
+`;
+    writeFileSync(prePushHook, prePushContent);
+    try {
+      execSync(`chmod +x "${prePushHook}"`, { shell: "/bin/bash" });
+    } catch (e) {
+      // chmod might fail on Windows, that's ok
+    }
+    console.log("✅ Created .husky/pre-push");
 
     console.log("\n✅ Husky setup complete");
     return true;
   } catch (error) {
     console.error(`⚠️  Error setting up Husky:`, error.message);
     console.log("You can set it up manually later with:");
-    console.log("  npx husky install");
-    console.log('  npx husky add .husky/pre-commit "npx lint-staged"');
-    console.log('  npx husky add .husky/pre-push "npm run type-check"\n');
+    console.log("  npx husky install\n");
     return false;
   }
 }
