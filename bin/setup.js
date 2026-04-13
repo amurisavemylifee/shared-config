@@ -33,8 +33,7 @@ export default config;
   {
     dest: 'tsconfig.json',
     content: `{
-  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
-  "compilerOptions": {}
+  "extends": "@amurisavemylifee/shared-config/tsconfig"
 }
 `,
   },
@@ -42,7 +41,15 @@ export default config;
     dest: 'tsconfig.app.json',
     content: `{
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
-  "compilerOptions": {}
+  "include": ["src"]
+}
+`,
+  },
+  {
+    dest: 'tsconfig.node.json',
+    content: `{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "include": ["vite.config.ts", "vitest.config.ts"]
 }
 `,
   },

@@ -65,29 +65,34 @@ export default config;
 // export default { ...config, printWidth: 100 };
 ```
 
-**tsconfig.json** (Node.js - tests, build, scripts):
+**tsconfig.json** (Base config):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
-  "compilerOptions": {}
+  "extends": "@amurisavemylifee/shared-config/tsconfig"
 }
 ```
 
-**tsconfig.app.json** (Browser/Vue app):
+**tsconfig.app.json** (Browser/Vue - extends base + DOM):
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
-  "compilerOptions": {
-    "outDir": "./dist"
-  }
+  "include": ["src"]
+}
+```
+
+**tsconfig.node.json** (Node.js - extends base):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
 
 **Benefits:**
-- ✅ Two separate TypeScript configs (Node vs App)
-- ✅ Updates in shared-config automatically apply to all projects
-- ✅ No need to re-copy files when updating the package
-- ✅ Easy to customize by extending the inherited config
+- ✅ Three TypeScript configs (Base, App, Node) - no code duplication
+- ✅ Inheritance chain: tsconfig.app/node → tsconfig.json → shared-config
+- ✅ Updates in shared-config automatically apply
+- ✅ Easy to customize by extending each config
 - ✅ Single source of truth for standards
 
 ## Manual Setup (If npx command doesn't work)
@@ -107,8 +112,9 @@ npx shared-config setup
 Check that these files exist in your project root:
 - ✅ `eslint.config.js` (inherits from @amurisavemylifee/shared-config/eslint)
 - ✅ `prettier.config.js` (inherits from @amurisavemylifee/shared-config/prettier)
-- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig.node)
+- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig)
 - ✅ `tsconfig.app.json` (extends @amurisavemylifee/shared-config/tsconfig.app)
+- ✅ `tsconfig.node.json` (extends @amurisavemylifee/shared-config/tsconfig.node)
 - ✅ `.editorconfig` (copied from package)
 
 And in `package.json`:
@@ -143,13 +149,10 @@ export default {
 };
 ```
 
-**tsconfig.json** (Node.js):
+**tsconfig.json** (Base):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
-  "compilerOptions": {
-    "outDir": "./dist"
-  }
+  "extends": "@amurisavemylifee/shared-config/tsconfig"
 }
 ```
 
@@ -158,10 +161,17 @@ export default {
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {
-    "outDir": "./dist",
-    "declaration": true
+    "outDir": "./dist"
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
+}
+```
+
+**tsconfig.node.json** (Node.js):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
 

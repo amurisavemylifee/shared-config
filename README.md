@@ -56,21 +56,28 @@ npx shared-config update       # Only update package.json
 
 ## Config Files Created
 
-Your project gets these inherited configs:
+Your project gets three TypeScript configs (like Vite):
 
-**tsconfig.json** - For Node.js (tests, build scripts):
+**tsconfig.json** - Base config (strict rules, no DOM):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
-  "compilerOptions": {}
+  "extends": "@amurisavemylifee/shared-config/tsconfig"
 }
 ```
 
-**tsconfig.app.json** - For browser/Vue apps:
+**tsconfig.app.json** - For browser/Vue apps (includes DOM):
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
-  "compilerOptions": {}
+  "include": ["src"]
+}
+```
+
+**tsconfig.node.json** - For Node.js (build scripts, tests):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
 
