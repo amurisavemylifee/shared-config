@@ -16,58 +16,23 @@ const command = process.argv[2];
 const configStubs = [
   {
     dest: "eslint.config.js",
-    content: `import sharedConfig from '@amurisavemylifee/shared-config/eslint';
-
-export default [
-  ...sharedConfig,
-];
-`,
+    template: "eslint.config.js",
   },
   {
     dest: "prettier.config.js",
-    content: `import config from '@amurisavemylifee/shared-config/prettier';
-
-export default config;
-`,
+    template: "prettier.config.js",
   },
   {
     dest: "tsconfig.json",
-    content: `{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "files": []
-}
-`,
+    template: "tsconfig.json",
   },
   {
     dest: "tsconfig.app.json",
-    content: `{
-  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
-  "compilerOptions": {
-    "composite": true
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
-}
-`,
+    template: "tsconfig.app.json",
   },
   {
     dest: "tsconfig.node.json",
-    content: `{
-  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
-  "compilerOptions": {
-    "composite": true
-  },
-  "include": ["vite.config.ts", "vitest.config.ts"]
-}
-`,
+    template: "tsconfig.node.json",
   },
   {
     dest: ".editorconfig",
@@ -79,7 +44,7 @@ export default config;
 function createConfigFiles() {
   console.log("\n🚀 Setting up config files...\n");
 
-  configStubs.forEach(({ dest, content, src, copy }) => {
+  configStubs.forEach(({ dest, template, src, copy }) => {
     const destPath = join(projectDir, dest);
 
     try {
@@ -93,8 +58,10 @@ function createConfigFiles() {
         const srcPath = join(packageDir, src);
         copyFileSync(srcPath, destPath);
         console.log(`✅ Copied ${dest}`);
-      } else {
+      } else if (template) {
         // Create config stubs that inherit from shared-config package
+        const templatePath = join(__dirname, "templates", template);
+        const content = readFileSync(templatePath, "utf-8");
         writeFileSync(destPath, content);
         console.log(`✅ Created ${dest} (inherits from shared-config)`);
       }

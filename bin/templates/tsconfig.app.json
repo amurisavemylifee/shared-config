@@ -1,0 +1,7 @@
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+}
