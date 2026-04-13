@@ -29,7 +29,7 @@ npx shared-config
 
 **This will:**
 - ✅ Create config files that inherit from shared-config (ESLint, Prettier, TypeScript)
-- ✅ Copy static files (.editorconfig, .prettierignore)
+- ✅ Copy static files (.editorconfig)
 - ✅ Add npm scripts to package.json (lint, type-check, validate, etc.)
 - ✅ Install dependencies (eslint, prettier, typescript, lint-staged, husky)
 - ✅ Setup Husky hooks (pre-commit, pre-push)
@@ -52,6 +52,42 @@ That's it! 🎉
 npx shared-config              # Full setup (recommended)
 npx shared-config init         # Only create config files
 npx shared-config update       # Only update package.json
+```
+
+## Config Files Created
+
+Your project gets these inherited configs:
+
+**tsconfig.json** - For Node.js (tests, build scripts):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {}
+}
+```
+
+**tsconfig.app.json** - For browser/Vue apps:
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {}
+}
+```
+
+**eslint.config.js** - Linting rules:
+```javascript
+import sharedConfig from '@amurisavemylifee/shared-config/eslint';
+
+export default [
+  ...sharedConfig,
+];
+```
+
+**prettier.config.js** - Code formatting:
+```javascript
+import config from '@amurisavemylifee/shared-config/prettier';
+
+export default config;
 ```
 
 ## Quick Start

@@ -65,17 +65,26 @@ export default config;
 // export default { ...config, printWidth: 100 };
 ```
 
-**tsconfig.json:**
+**tsconfig.json** (Node.js - tests, build, scripts):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {}
+}
+```
+
+**tsconfig.app.json** (Browser/Vue app):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {
-    // Add your custom options here
+    "outDir": "./dist"
   }
 }
 ```
 
 **Benefits:**
+- ✅ Two separate TypeScript configs (Node vs App)
 - ✅ Updates in shared-config automatically apply to all projects
 - ✅ No need to re-copy files when updating the package
 - ✅ Easy to customize by extending the inherited config
@@ -98,9 +107,9 @@ npx shared-config setup
 Check that these files exist in your project root:
 - ✅ `eslint.config.js` (inherits from @amurisavemylifee/shared-config/eslint)
 - ✅ `prettier.config.js` (inherits from @amurisavemylifee/shared-config/prettier)
-- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig)
+- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig.node)
+- ✅ `tsconfig.app.json` (extends @amurisavemylifee/shared-config/tsconfig.app)
 - ✅ `.editorconfig` (copied from package)
-- ✅ `.prettierignore` (copied from package)
 
 And in `package.json`:
 - ✅ `scripts` with: lint, lint:fix, format, format:check, type-check, validate, prepare
@@ -134,10 +143,20 @@ export default {
 };
 ```
 
-**tsconfig.json - Add project-specific options:**
+**tsconfig.json** (Node.js):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {
+    "outDir": "./dist"
+  }
+}
+```
+
+**tsconfig.app.json** (Browser/Vue):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {
     "outDir": "./dist",
     "declaration": true
@@ -212,7 +231,7 @@ The postinstall hook handles updating files automatically! ✅
 
 **In the shared-config repo:**
 
-1. Update `eslint.config.js`, `prettier.config.js`, or `tsconfig.json`
+1. Update `eslint.config.js`, `prettier.config.js`, `tsconfig.node.json`, or `tsconfig.app.json`
 2. Bump version in `package.json` (`npm version minor` or `npm version patch`)
 3. Commit and push
 4. Create a GitHub Release (auto-publishes with GitHub Actions)

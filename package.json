@@ -27,17 +27,17 @@
   "exports": {
     "./eslint": "./eslint.config.js",
     "./prettier": "./prettier.config.js",
-    "./tsconfig": "./tsconfig.json",
+    "./tsconfig.node": "./tsconfig.node.json",
+    "./tsconfig.app": "./tsconfig.app.json",
     "./editorconfig": "./.editorconfig",
-    "./prettierignore": "./.prettierignore",
     "./package": "./package.json"
   },
   "files": [
     "eslint.config.js",
     "prettier.config.js",
-    "tsconfig.json",
+    "tsconfig.node.json",
+    "tsconfig.app.json",
     ".editorconfig",
-    ".prettierignore",
     "bin",
     "README.md",
     "LICENSE"

@@ -33,7 +33,15 @@ export default config;
   {
     dest: 'tsconfig.json',
     content: `{
-  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {}
+}
+`,
+  },
+  {
+    dest: 'tsconfig.app.json',
+    content: `{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {}
 }
 `,
@@ -41,11 +49,6 @@ export default config;
   {
     dest: '.editorconfig',
     src: '.editorconfig',
-    copy: true,
-  },
-  {
-    dest: '.prettierignore',
-    src: '.prettierignore',
     copy: true,
   },
 ];
