@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "publish",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash bin/publish.sh",
+            "statusMessage": "Publishing new version..."
+          }
+        ]
+      }
+    ]
+  }
+}
