@@ -346,6 +346,12 @@ export default ts.config(
     },
   },
 
+  // ─── Disable type-checked rules for JS config files ─────────────────────
+  {
+    files: ["*.config.js", "*.config.mjs", "*.config.cjs", ".eslintrc.*"],
+    ...ts.configs.disableTypeChecked,
+  },
+
   // ─── Config files — Node environment ─────────────────────────────────────
   {
     files: ["*.config.{ts,js}", ".eslintrc.*"],
