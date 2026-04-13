@@ -36,7 +36,6 @@ export default config;
   "extends": "@amurisavemylifee/shared-config/tsconfig",
     "compilerOptions": {
     "baseUrl": ".",
-    "types": ["vite/client"],
     "paths": {
       "@/*": ["src/*"]
     }

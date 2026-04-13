@@ -40,6 +40,7 @@ npx shared-config
 ```
 
 **This automatically:**
+
 - ✅ Creates config files that inherit from shared-config
 - ✅ Copies static files (.editorconfig, .prettierignore)
 - ✅ Updates `package.json` with npm scripts
@@ -55,11 +56,13 @@ npm run validate
 That's it! 🎉
 
 **Why inheritance?**
+
 - ✅ Updates in shared-config automatically apply to your project
 - ✅ No need to re-copy files on version updates
 - ✅ Customize by extending the config in your own files
 
 **Need to re-run specific steps?**
+
 ```bash
 npx shared-config              # Full setup (recommended)
 npx shared-config init         # Only create config files
@@ -82,6 +85,7 @@ npx shared-config setup
 ## Verifying Installation
 
 Check that these files exist in your project root:
+
 - ✅ `eslint.config.js` (inherits from @amurisavemylifee/shared-config/eslint)
 - ✅ `prettier.config.js` (inherits from @amurisavemylifee/shared-config/prettier)
 - ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig)
@@ -90,6 +94,7 @@ Check that these files exist in your project root:
 - ✅ `.editorconfig` (copied from package)
 
 And in `package.json`:
+
 - ✅ `scripts` with: lint, lint:fix, format, format:check, type-check, validate, prepare
 - ✅ `lint-staged` configuration with file patterns
 
@@ -98,6 +103,7 @@ And in `package.json`:
 Your project gets three TypeScript configs (like Vite):
 
 **tsconfig.json** - Base config (strict rules, no DOM):
+
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig"
@@ -105,6 +111,7 @@ Your project gets three TypeScript configs (like Vite):
 ```
 
 **tsconfig.app.json** - For browser/Vue apps (includes DOM):
+
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
@@ -119,6 +126,7 @@ Your project gets three TypeScript configs (like Vite):
 ```
 
 **tsconfig.node.json** - For Node.js (build scripts, tests):
+
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.node",
@@ -127,17 +135,17 @@ Your project gets three TypeScript configs (like Vite):
 ```
 
 **eslint.config.js** - Linting rules:
-```javascript
-import sharedConfig from '@amurisavemylifee/shared-config/eslint';
 
-export default [
-  ...sharedConfig,
-];
+```javascript
+import sharedConfig from "@amurisavemylifee/shared-config/eslint";
+
+export default [...sharedConfig];
 ```
 
 **prettier.config.js** - Code formatting:
+
 ```javascript
-import config from '@amurisavemylifee/shared-config/prettier';
+import config from "@amurisavemylifee/shared-config/prettier";
 
 export default config;
 ```
@@ -166,18 +174,18 @@ All configs are **production-ready and strict by default**. They are designed to
 
 ### ESLint Rules (Key ones)
 
-| Rule | Purpose |
-|------|---------|
-| `no-explicit-any` | No `any` — use `unknown` with type narrowing |
-| `explicit-function-return-type` | All functions must declare return type |
-| `explicit-member-accessibility` | All class members need `public`/`private`/`protected` |
-| `no-floating-promises` | All promises must be `await`ed or explicitly handled |
-| `no-console` | No `console.log` in production (only warn/error allowed) |
-| `max-lines-per-function: 50` | Functions must be short and focused |
-| `max-lines: 800` | Files must stay under 800 lines |
-| `max-depth: 4` | Maximum nesting depth of 4 |
-| `complexity: 10` | Function complexity max 10 branches |
-| `simple-import-sort` | Semantic import ordering with blank-line groups |
+| Rule                            | Purpose                                                  |
+| ------------------------------- | -------------------------------------------------------- |
+| `no-explicit-any`               | No `any` — use `unknown` with type narrowing             |
+| `explicit-function-return-type` | All functions must declare return type                   |
+| `explicit-member-accessibility` | All class members need `public`/`private`/`protected`    |
+| `no-floating-promises`          | All promises must be `await`ed or explicitly handled     |
+| `no-console`                    | No `console.log` in production (only warn/error allowed) |
+| `max-lines-per-function: 50`    | Functions must be short and focused                      |
+| `max-lines: 800`                | Files must stay under 800 lines                          |
+| `max-depth: 4`                  | Maximum nesting depth of 4                               |
+| `complexity: 10`                | Function complexity max 10 branches                      |
+| `simple-import-sort`            | Semantic import ordering with blank-line groups          |
 
 ### TypeScript (Maximum Strictness)
 
@@ -233,22 +241,24 @@ import "reflect-metadata";
 You can extend the inherited configs in your project:
 
 **eslint.config.js - Add custom rules:**
+
 ```javascript
-import sharedConfig from '@amurisavemylifee/shared-config/eslint';
-import customPlugin from 'custom-eslint-plugin';
+import sharedConfig from "@amurisavemylifee/shared-config/eslint";
+import customPlugin from "custom-eslint-plugin";
 
 export default [
   ...sharedConfig,
   {
     plugins: { customPlugin },
-    rules: { 'custom-plugin/rule': 'warn' },
+    rules: { "custom-plugin/rule": "warn" },
   },
 ];
 ```
 
 **prettier.config.js - Override options:**
+
 ```javascript
-import config from '@amurisavemylifee/shared-config/prettier';
+import config from "@amurisavemylifee/shared-config/prettier";
 
 export default {
   ...config,
@@ -257,28 +267,30 @@ export default {
 ```
 
 **tsconfig.json** (Base):
-```json
-{
-  "extends": "@amurisavemylifee/shared-config/tsconfig"
-}
-```
 
-**tsconfig.app.json** (Browser/Vue):
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "outDir": "./dist"
-  },
-  "include": ["src"]
+    }
+  }
+}
+```
+
+**tsconfig.app.json** (Browser/Vue):
+
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 ```
 
 **tsconfig.node.json** (Node.js):
+
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.node",
@@ -287,26 +299,6 @@ export default {
 ```
 
 ## Troubleshooting
-
-### ESLint Error: "Cannot find module"
-
-Make sure `tsconfigRootDir` in `eslint.config.js` points to your project root. If the config was copied correctly, it should be:
-
-```javascript
-tsconfigRootDir: import.meta.dirname,
-```
-
-### TypeScript errors on `import.meta`
-
-Add to your `tsconfig.json`:
-
-```json
-{
-  "compilerOptions": {
-    "lib": ["ES2022", "DOM", "DOM.Iterable"]
-  }
-}
-```
 
 ### Pre-commit hook not running
 
@@ -317,16 +309,6 @@ npx husky install
 # Verify hooks were created
 ls -la .husky/
 ```
-
-### Import sorting not working
-
-Run:
-
-```bash
-npm run lint:fix
-```
-
-This auto-fixes all import order violations.
 
 ## Updates & Publishing
 
@@ -352,47 +334,6 @@ The inherited configs automatically use the updated rules from the package. No n
 ```bash
 npm update @amurisavemylifee/shared-config
 ```
-
-### Publishing to GitHub Packages
-
-#### Step 1: Create GitHub Personal Access Token
-
-1. Go to [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
-2. Click "Generate new token (classic)"
-3. Select scopes: `write:packages` and `read:packages`
-4. Save the token
-
-#### Step 2: Configure npm authentication
-
-Create or update `~/.npmrc`:
-
-```
-@amurisavemylifee:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN_HERE
-```
-
-Replace `YOUR_GITHUB_TOKEN_HERE` with your token.
-
-#### Step 3: Create & push GitHub repository
-
-```bash
-git init
-git add .
-git commit -m "feat: initial commit"
-git branch -M main
-git remote add origin https://github.com/amurisavemylifee/shared-config.git
-git push -u origin main
-```
-
-#### Step 4: Publish to GitHub Packages
-
-```bash
-npm publish
-```
-
-✅ Package is now available at `@amurisavemylifee/shared-config`!
-
-GitHub Actions will auto-publish on releases (config already in `.github/workflows/publish.yml`).
 
 ## Issues
 
