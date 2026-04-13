@@ -15,26 +15,38 @@ One strict config to rule them all — install once, update everywhere.
 - ✅ **Prettier integration** — Single `eslint --fix` handles both linting and formatting
 - ✅ **Pre-commit hooks** — Husky + lint-staged for fast checks before pushing
 
+## Prerequisites
+
+- Node.js 18+
+- npm 9+ (or yarn/pnpm)
+- Git
+
 ## Installation (One Command!)
 
 ```bash
 npm install --save-dev @amurisavemylifee/shared-config && npx shared-config
 ```
 
-### What it does:
+### Step 1: Install the package
+
+```bash
+npm install --save-dev @amurisavemylifee/shared-config
+```
+
+### Step 2: Run setup
 
 ```bash
 npx shared-config
 ```
 
-**This will:**
-- ✅ Create config files that inherit from shared-config (ESLint, Prettier, TypeScript)
-- ✅ Copy static files (.editorconfig)
-- ✅ Add npm scripts to package.json (lint, type-check, validate, etc.)
-- ✅ Install dependencies (eslint, prettier, typescript, lint-staged, husky)
-- ✅ Setup Husky hooks (pre-commit, pre-push)
+**This automatically:**
+- ✅ Creates config files that inherit from shared-config
+- ✅ Copies static files (.editorconfig, .prettierignore)
+- ✅ Updates `package.json` with npm scripts
+- ✅ Installs dependencies: eslint, prettier, typescript, lint-staged, husky
+- ✅ Sets up Husky hooks (pre-commit, pre-push)
 
-### 3. Done! Run validation
+### Step 3: Done! Run validation
 
 ```bash
 npm run validate
@@ -52,7 +64,34 @@ That's it! 🎉
 npx shared-config              # Full setup (recommended)
 npx shared-config init         # Only create config files
 npx shared-config update       # Only update package.json
+npx shared-config --help       # Show all available commands
 ```
+
+### Manual Setup (If npx command doesn't work)
+
+If for some reason the setup didn't run:
+
+```bash
+# Create config files that inherit from shared-config
+npx shared-config init
+
+# Full setup (includes dependencies and husky)
+npx shared-config setup
+```
+
+## Verifying Installation
+
+Check that these files exist in your project root:
+- ✅ `eslint.config.js` (inherits from @amurisavemylifee/shared-config/eslint)
+- ✅ `prettier.config.js` (inherits from @amurisavemylifee/shared-config/prettier)
+- ✅ `tsconfig.json` (extends @amurisavemylifee/shared-config/tsconfig)
+- ✅ `tsconfig.app.json` (extends @amurisavemylifee/shared-config/tsconfig.app)
+- ✅ `tsconfig.node.json` (extends @amurisavemylifee/shared-config/tsconfig.node)
+- ✅ `.editorconfig` (copied from package)
+
+And in `package.json`:
+- ✅ `scripts` with: lint, lint:fix, format, format:check, type-check, validate, prepare
+- ✅ `lint-staged` configuration with file patterns
 
 ## Config Files Created
 
@@ -189,7 +228,109 @@ import "./styles.css";
 import "reflect-metadata";
 ```
 
-## Updates
+## Customizing Inherited Configs
+
+You can extend the inherited configs in your project:
+
+**eslint.config.js - Add custom rules:**
+```javascript
+import sharedConfig from '@amurisavemylifee/shared-config/eslint';
+import customPlugin from 'custom-eslint-plugin';
+
+export default [
+  ...sharedConfig,
+  {
+    plugins: { customPlugin },
+    rules: { 'custom-plugin/rule': 'warn' },
+  },
+];
+```
+
+**prettier.config.js - Override options:**
+```javascript
+import config from '@amurisavemylifee/shared-config/prettier';
+
+export default {
+  ...config,
+  printWidth: 100, // Override specific option
+};
+```
+
+**tsconfig.json** (Base):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig"
+}
+```
+
+**tsconfig.app.json** (Browser/Vue):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "outDir": "./dist"
+  },
+  "include": ["src"]
+}
+```
+
+**tsconfig.node.json** (Node.js):
+```json
+{
+  "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "include": ["vite.config.ts", "vitest.config.ts"]
+}
+```
+
+## Troubleshooting
+
+### ESLint Error: "Cannot find module"
+
+Make sure `tsconfigRootDir` in `eslint.config.js` points to your project root. If the config was copied correctly, it should be:
+
+```javascript
+tsconfigRootDir: import.meta.dirname,
+```
+
+### TypeScript errors on `import.meta`
+
+Add to your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  }
+}
+```
+
+### Pre-commit hook not running
+
+```bash
+# Reinitialize Husky
+npx husky install
+
+# Verify hooks were created
+ls -la .husky/
+```
+
+### Import sorting not working
+
+Run:
+
+```bash
+npm run lint:fix
+```
+
+This auto-fixes all import order violations.
+
+## Updates & Publishing
+
+### Updating shared-config
 
 To update all your projects at once:
 
@@ -197,7 +338,61 @@ To update all your projects at once:
 npm update @amurisavemylifee/shared-config
 ```
 
-Then copy the updated config files (or re-run the setup script).
+The inherited configs automatically use the updated rules from the package. No need to re-copy files or update anything else!
+
+**To improve the config:**
+
+1. Edit `eslint.config.js`, `prettier.config.js`, `tsconfig.node.json`, or `tsconfig.app.json`
+2. Bump version in `package.json` (`npm version minor` or `npm version patch`)
+3. Commit and push
+4. Create a GitHub Release (auto-publishes with GitHub Actions)
+
+**In your projects:**
+
+```bash
+npm update @amurisavemylifee/shared-config
+```
+
+### Publishing to GitHub Packages
+
+#### Step 1: Create GitHub Personal Access Token
+
+1. Go to [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
+2. Click "Generate new token (classic)"
+3. Select scopes: `write:packages` and `read:packages`
+4. Save the token
+
+#### Step 2: Configure npm authentication
+
+Create or update `~/.npmrc`:
+
+```
+@amurisavemylifee:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN_HERE
+```
+
+Replace `YOUR_GITHUB_TOKEN_HERE` with your token.
+
+#### Step 3: Create & push GitHub repository
+
+```bash
+git init
+git add .
+git commit -m "feat: initial commit"
+git branch -M main
+git remote add origin https://github.com/amurisavemylifee/shared-config.git
+git push -u origin main
+```
+
+#### Step 4: Publish to GitHub Packages
+
+```bash
+npm publish
+```
+
+✅ Package is now available at `@amurisavemylifee/shared-config`!
+
+GitHub Actions will auto-publish on releases (config already in `.github/workflows/publish.yml`).
 
 ## Issues
 
