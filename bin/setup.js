@@ -39,8 +39,13 @@ export default config;
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
-  }
+    },
+    "types": ["vite/client"]
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
 `,
   },
@@ -51,9 +56,6 @@ export default config;
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 `,
@@ -65,9 +67,6 @@ export default config;
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 `,

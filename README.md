@@ -102,7 +102,7 @@ And in `package.json`:
 
 Your project gets three TypeScript configs (like Vite):
 
-**tsconfig.json** - Base config (strict rules, project references):
+**tsconfig.json** - Root config (project references, paths, types):
 
 ```json
 {
@@ -112,12 +112,17 @@ Your project gets three TypeScript configs (like Vite):
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
-  }
+    },
+    "types": ["vite/client"]
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
 ```
 
-**tsconfig.app.json** - For browser/Vue apps (with DOM, references base):
+**tsconfig.app.json** - For browser/Vue apps (with DOM):
 
 ```json
 {
@@ -125,14 +130,11 @@ Your project gets three TypeScript configs (like Vite):
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 ```
 
-**tsconfig.node.json** - For Node.js (build scripts, tests, references base):
+**tsconfig.node.json** - For Node.js (build scripts, tests):
 
 ```json
 {
@@ -140,9 +142,6 @@ Your project gets three TypeScript configs (like Vite):
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
@@ -279,7 +278,7 @@ export default {
 };
 ```
 
-**tsconfig.json** (Base with project references):
+**tsconfig.json** (Root with project references):
 
 ```json
 {
@@ -289,12 +288,17 @@ export default {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
-  }
+    },
+    "types": ["vite/client"]
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
 ```
 
-**tsconfig.app.json** (Browser/Vue, references base):
+**tsconfig.app.json** (Browser/Vue):
 
 ```json
 {
@@ -302,14 +306,11 @@ export default {
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 ```
 
-**tsconfig.node.json** (Node.js, references base):
+**tsconfig.node.json** (Node.js):
 
 ```json
 {
@@ -317,9 +318,6 @@ export default {
   "compilerOptions": {
     "composite": true
   },
-  "references": [
-    { "path": "./tsconfig.json" }
-  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
