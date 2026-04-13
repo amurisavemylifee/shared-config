@@ -50,7 +50,7 @@ export default ts.config(
   //   Vue core → Vue Router → Pinia → vue-i18n → other UI libs → utilities
   //   This is achieved through the regex priority ordering within the group.
   {
-    files: ["src/**/*.{ts,vue}", "vite.config.ts", "*.config.{ts,js}"],
+    files: ["src/**/*.{ts,tsx,jsx,vue}", "vite.config.ts", "*.config.{ts,js}"],
 
     plugins: {
       "simple-import-sort": simpleImportSort,
@@ -137,7 +137,7 @@ export default ts.config(
 
   // ─── Main application config ──────────────────────────────────────────────
   {
-    files: ["src/**/*.{ts,vue}", "vite.config.ts"],
+    files: ["src/**/*.{ts,tsx,jsx,vue}", "vite.config.ts"],
 
     plugins: {
       prettier: pluginPrettier,
