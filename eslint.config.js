@@ -294,6 +294,10 @@ export default ts.config(
       ],
 
       // ── General JS best practices ─────────────────────────────────────────
+      // Disable base no-undef — use @typescript-eslint/no-undef for type-aware linting
+      "no-undef": "off",
+      // TypeScript no-undef handles autoimports and global types
+      "@typescript-eslint/no-undef": "error",
       // No console.log in production code
       "no-console": ["error", { allow: ["warn", "error"] }],
       // No debugger statements
