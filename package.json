@@ -1,6 +1,6 @@
 {
   "name": "@amurisavemylifee/shared-config",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Strict, production-ready ESLint, Prettier, and TypeScript configurations for Vue 3, TypeScript, and Node.js projects",
   "license": "MIT",
   "author": "amurisavemylifee",
