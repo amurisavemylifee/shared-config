@@ -34,7 +34,8 @@ export default config;
     dest: "tsconfig.json",
     content: `{
   "extends": "@amurisavemylifee/shared-config/tsconfig",
-    "compilerOptions": {
+  "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -47,6 +48,12 @@ export default config;
     dest: "tsconfig.app.json",
     content: `{
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 `,
@@ -55,6 +62,12 @@ export default config;
     dest: "tsconfig.node.json",
     content: `{
   "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 `,

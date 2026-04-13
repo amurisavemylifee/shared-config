@@ -102,34 +102,47 @@ And in `package.json`:
 
 Your project gets three TypeScript configs (like Vite):
 
-**tsconfig.json** - Base config (strict rules, no DOM):
+**tsconfig.json** - Base config (strict rules, project references):
 
 ```json
 {
-  "extends": "@amurisavemylifee/shared-config/tsconfig"
+  "extends": "@amurisavemylifee/shared-config/tsconfig",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
 }
 ```
 
-**tsconfig.app.json** - For browser/Vue apps (includes DOM):
+**tsconfig.app.json** - For browser/Vue apps (with DOM, references base):
 
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "composite": true
   },
-  "include": ["src"]
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 ```
 
-**tsconfig.node.json** - For Node.js (build scripts, tests):
+**tsconfig.node.json** - For Node.js (build scripts, tests, references base):
 
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
@@ -266,12 +279,13 @@ export default {
 };
 ```
 
-**tsconfig.json** (Base):
+**tsconfig.json** (Base with project references):
 
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -280,20 +294,32 @@ export default {
 }
 ```
 
-**tsconfig.app.json** (Browser/Vue):
+**tsconfig.app.json** (Browser/Vue, references base):
 
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
 ```
 
-**tsconfig.node.json** (Node.js):
+**tsconfig.node.json** (Node.js, references base):
 
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.node",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.json" }
+  ],
   "include": ["vite.config.ts", "vitest.config.ts"]
 }
 ```
