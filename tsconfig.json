@@ -27,10 +27,6 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "inlineSourceMap": true,
-    "inlineSources": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "inlineSources": true
   }
 }

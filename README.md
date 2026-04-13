@@ -69,6 +69,12 @@ Your project gets three TypeScript configs (like Vite):
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
   "include": ["src"]
 }
 ```

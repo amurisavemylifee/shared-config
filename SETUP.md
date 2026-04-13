@@ -76,6 +76,12 @@ export default config;
 ```json
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
   "include": ["src"]
 }
 ```
@@ -161,6 +167,10 @@ export default {
 {
   "extends": "@amurisavemylifee/shared-config/tsconfig.app",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "outDir": "./dist"
   },
   "include": ["src"]
