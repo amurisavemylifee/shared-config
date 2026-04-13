@@ -37,8 +37,7 @@ export default config;
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["vite/client"]
+    }
   },
   "references": [
     { "path": "./tsconfig.app.json" },

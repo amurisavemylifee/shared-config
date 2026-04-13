@@ -102,7 +102,7 @@ And in `package.json`:
 
 Your project gets three TypeScript configs (like Vite):
 
-**tsconfig.json** - Root config (project references, paths, types):
+**tsconfig.json** - Root config (project references, paths):
 
 ```json
 {
@@ -110,8 +110,7 @@ Your project gets three TypeScript configs (like Vite):
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["vite/client"]
+    }
   },
   "references": [
     { "path": "./tsconfig.app.json" },
@@ -121,7 +120,7 @@ Your project gets three TypeScript configs (like Vite):
 }
 ```
 
-**tsconfig.app.json** - For browser/Vue apps (with DOM):
+**tsconfig.app.json** - For browser/Vue apps (with DOM, vite/client types):
 
 ```json
 {
@@ -285,8 +284,7 @@ export default {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["vite/client"]
+    }
   },
   "references": [
     { "path": "./tsconfig.app.json" },
@@ -296,7 +294,7 @@ export default {
 }
 ```
 
-**tsconfig.app.json** (Browser/Vue):
+**tsconfig.app.json** (Browser/Vue, inherits vite/client types):
 
 ```json
 {
