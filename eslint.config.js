@@ -1,12 +1,12 @@
-import js from "@eslint/js";
-import ts from "typescript-eslint";
-import pluginVue from "eslint-plugin-vue";
 import prettierConfig from "eslint-config-prettier";
-import pluginPrettier from "eslint-plugin-prettier";
-import unicorn from "eslint-plugin-unicorn";
-import sonarjs from "eslint-plugin-sonarjs";
-import simpleImportSort from "eslint-plugin-simple-import-sort";
 import pluginImport from "eslint-plugin-import";
+import pluginPrettier from "eslint-plugin-prettier";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import sonarjs from "eslint-plugin-sonarjs";
+import unicorn from "eslint-plugin-unicorn";
+import pluginVue from "eslint-plugin-vue";
+import ts from "typescript-eslint";
+import js from "@eslint/js";
 
 export default ts.config(
   // ─── Global ignores ───────────────────────────────────────────────────────
@@ -296,8 +296,6 @@ export default ts.config(
       // ── General JS best practices ─────────────────────────────────────────
       // Disable base no-undef — use @typescript-eslint/no-undef for type-aware linting
       "no-undef": "off",
-      // TypeScript no-undef handles autoimports and global types
-      "@typescript-eslint/no-undef": "error",
       // No console.log in production code
       "no-console": ["error", { allow: ["warn", "error"] }],
       // No debugger statements

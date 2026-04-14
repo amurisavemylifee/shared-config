@@ -65,5 +65,10 @@
     "eslint-plugin-vue": "^10.8.0",
     "typescript-eslint": "^8.58.1",
     "vue-eslint-parser": "^10.4.0"
+  },
+  "overrides": {
+    "eslint-plugin-import": {
+      "eslint": ">=10.0.0"
+    }
   }
 }
