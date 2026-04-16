@@ -221,6 +221,8 @@ export default ts.config(
       // ── Vue 3 — strict additions ───────────────────────────────────────────
       // Components must be multi-word to avoid clashing with HTML elements
       "vue/multi-word-component-names": "error",
+      // Custom components in templates must use PascalCase
+      "vue/component-name-in-template-casing": ["error", "PascalCase", { registeredComponentsOnly: false }],
       // Attribute order: directive, v-bind, event, plain
       "vue/attributes-order": ["error", { alphabetical: true }],
       // Enforce component options order
