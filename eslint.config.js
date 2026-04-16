@@ -229,7 +229,7 @@ export default ts.config(
       "vue/order-in-components": "error",
       // No v-html — XSS risk
       "vue/no-v-html": "error",
-      // Self-closing tags for void/childless elements
+      // Self-closing tags for void/childless elements and components (including <slot />)
       "vue/html-self-closing": [
         "error",
         {
@@ -238,6 +238,8 @@ export default ts.config(
           math: "always",
         },
       ],
+      // Empty <slot> elements must be self-closing
+      "vue/require-slot-empty-self-closing": "error",
       // Max template attributes per line: 1 = each on its own line
       "vue/max-attributes-per-line": ["error", { singleline: { max: 1 }, multiline: { max: 1 } }],
       // Require emits declarations
