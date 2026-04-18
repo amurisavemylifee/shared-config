@@ -186,21 +186,6 @@ npx lint-staged
     }
     console.log("✅ Created .husky/pre-commit");
 
-    // Create pre-push hook
-    const prePushHook = join(huskyDir, "pre-push");
-    const prePushContent = `#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npm run type-check
-`;
-    writeFileSync(prePushHook, prePushContent);
-    try {
-      execSync(`chmod +x "${prePushHook}"`, { shell: "/bin/bash" });
-    } catch (e) {
-      // chmod might fail on Windows, that's ok
-    }
-    console.log("✅ Created .husky/pre-push");
-
     console.log("\n✅ Husky setup complete");
     return true;
   } catch (error) {
