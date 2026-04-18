@@ -39,6 +39,11 @@ const configStubs = [
     src: ".editorconfig",
     copy: true,
   },
+  {
+    dest: ".gitattributes",
+    src: ".gitattributes",
+    copy: true,
+  },
 ];
 
 function createConfigFiles() {

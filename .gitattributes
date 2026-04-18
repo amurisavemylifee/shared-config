@@ -1,0 +1,38 @@
+# Git Attributes: https://git-scm.com/docs/gitattributes
+# Ensures consistent file handling across platforms
+
+# Text files with LF line endings
+* text=auto eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+*.tsx text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.vue text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Windows-specific files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files (no normalization)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.svg binary
+*.mp4 binary
+*.mp3 binary
+*.zip binary
